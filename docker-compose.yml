@@ -11,7 +11,7 @@ services:
     ports:
       - "3306:3306"
     healthcheck: # O Docker vai testar se o banco aceita conexões
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p123456"]
       interval: 5s
       timeout: 5s
       retries: 10  
