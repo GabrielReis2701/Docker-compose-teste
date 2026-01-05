@@ -1,0 +1,17 @@
+
+form-group{
+  display: flex;
+  flex-direction: column; /* Coloca um embaixo do outro */
+  margin-bottom: 15px;
+}
+
+form-group > label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group > input {
+  padding: 10px;
+  width: 100%; /* Ocupa toda a largura do container */
+  box-sizing: border-box; /* Garante que o padding não estoure a largura */
+}
