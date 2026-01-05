@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.3
+    command: --lower_case_table_names=1
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: dbTesteJavaAngular
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    healthcheck: # O Docker vai testar se o banco aceita conexões
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10  
+
+  backend:
+    build: ./teste-Java-And-Angula-Login
+    container_name: spring-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+       db:
+          condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/dbTesteJavaAngular?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+  
+  frontend:
+    build: ./testeAngular
+    container_name: frontend-angular
+    ports:
+      - "8081:80" # Mapeia a porta 4200 do seu PC para a 80 do container
+    depends_on:
+      - backend
